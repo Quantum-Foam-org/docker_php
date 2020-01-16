@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+         php:
+                image: symfony_php:7.4.1
+                volumes:
+                        - ./symfony_app:/var/www/html:rw,cached
+                        - ./conf.d/etc/php/symfony_app_php.dev.ini:/usr/local/etc/php/conf.d/symfony_app_php.dev.ini
+                ports:
+                        - "80:80"
+        
+         mongodb:
+                image: mongo:4.0.14 
+                restart: always
+                volumes:
+                        - type: volume
+                          source: mongodb_data
+                          target: /data/db
+                environment:
+                        MONGO_INITDB_ROOT_USERNAME: root
+                        MONGO_INITDB_ROOT_PASSWORD: example
+                ports:
+                        - "27017:27017"
+volumes:
+        mongodb_data:
+
+                        
