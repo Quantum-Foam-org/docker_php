@@ -1,0 +1,3 @@
+[mysqld]
+datadir=/data/mysql
+secure_file_priv=/data/mysql
