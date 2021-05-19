@@ -17,4 +17,4 @@ apps are **located** in */var/www/html*
 cd /var/www/html/php/HTTP_Testing_Utilities && php curlHTTPWebSpider.php --startUrl=http://openbsd.org
 less /tmp/php_http_testing_utilities.log
 ```
-** All docker commands require sudo.  It is recommended by the debian documentation. https://wiki.debian.org/Docker***
+**All docker commands require sudo.  It is recommended by the debian documentation. https://wiki.debian.org/Docker**
