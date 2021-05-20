@@ -57,13 +57,13 @@ echo $BASH_LIB_PROMPT
 if [[ ${BASH_LIB_PROMPT^^} == 'Y' ]]
 then
     print_info "Purging old install"
-    DOCKER_IMG=`sudo docker volume rm -f docker_quantum_foam_php`
-    DOCKER_IMG=`sudo docker image rm -f docker_quantum_foam_mysql`
-    DOCKER_QF_BRIDGE=`sudo docker network rm docker_qf_bridge`
+    DOCKER_IMG=`sudo -gdocker docker volume rm -f docker_quantum_foam_php`
+    DOCKER_IMG=`sudo -gdocker docker image rm -f docker_quantum_foam_mysql`
+    DOCKER_QF_BRIDGE=`sudo -gdocker docker network rm docker_qf_bridge`
 
-    DOCKER_MONGODB=`sudo docker volume rm mongodb_data`
+    DOCKER_MONGODB=`sudo -gdocker docker volume rm mongodb_data`
 
-    DOCKER_MYSQL=`sudo docker volume rm mysql_data`
+    DOCKER_MYSQL=`sudo -gdocker docker volume rm mysql_data`
     
     PHP_CODE=("php_common" "php_cli" "MemcacheStats" "php_unit_tests" "HTTP_Testing_Utilities")
     for DIR in ${PHP_CODE[@]}
@@ -86,7 +86,7 @@ git_clone "php" "https://github.com/Quantum-Foam-org/MemcacheStats.git"
 git_clone "web-root" "https://github.com/Quantum-Foam-org/php_mvc_framework.git"
 
 print_info "Creating docker_qf_bridge network"
-DOCKER_NF=`sudo docker network create --subnet=172.27.0.0/28 --gateway=172.27.0.1  docker_qf_bridge`
+DOCKER_NF=`sudo -gdocker docker network create --subnet=172.27.0.0/28 --gateway=172.27.0.1  docker_qf_bridge`
 if [ $? -ne 0 ]
 then
     print_error "Unable to create docker_qf_bridge"
@@ -96,7 +96,7 @@ else
 fi
 
 print_info "Creating mongodb_data volume"
-DOCKER_MONGO=`sudo docker volume create mongodb_data`
+DOCKER_MONGO=`sudo -gdocker docker volume create mongodb_data`
 if [ $? -ne 0 ]
 then
     print_error "Unable to create mongodb_data"
@@ -106,7 +106,7 @@ else
 fi
 
 print_info "Creating mysql_data volume"
-DOCKER_MYSQL=`sudo docker volume create mysql_data`
+DOCKER_MYSQL=`sudo -gdocker docker volume create mysql_data`
 if [ $? -ne 0 ]
 then
     print_error "Unable to create mysql_data"
@@ -116,7 +116,7 @@ else
 fi
 
 print_info "building docker container docker_quantum_foam_php"
-DOCKER_BUILD=`sudo docker build --target docker_quantum_foam_php -t docker_quantum_foam_php .`
+DOCKER_BUILD=`sudo -gdocker docker build --target docker_quantum_foam_php -t docker_quantum_foam_php .`
 if [ $? -ne 0 ]
 then
     print_error "Unable to build docker_quantum_foam"
@@ -128,7 +128,7 @@ else
 fi
 
 print_info "building docker container docker_quantum_foam_mysql"
-DOCKER_BUILD=`sudo docker build --target docker_quantum_foam_mysql -t docker_quantum_foam_mysql .`
+DOCKER_BUILD=`sudo -gdocker docker build --target docker_quantum_foam_mysql -t docker_quantum_foam_mysql .`
 if [ $? -ne 0 ]
 then
     print_error "Unable to build docker_quantum_foam"
