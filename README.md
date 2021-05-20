@@ -18,5 +18,7 @@ cd /var/www/html/php/HTTP_Testing_Utilities && php curlHTTPWebSpider.php --start
 less /tmp/php_http_testing_utilities.log
 ```
 **All docker commands require sudo.  It is recommended by the debian documentation. https://wiki.debian.org/Docker**
-**visudo and add this command for your user or group "%users ALL = (docker:docker) /usr/bin/docker, /usr/bin/docker-compose"**
-**When running docker or docker-compose do the following `sudo -u(your_user) -gdocker docker`**
+```
+visudo and add this command for your user or group "%users ALL = (docker:docker) /usr/bin/docker, /usr/bin/docker-compose"
+When running docker or docker-compose do the following `sudo -u(your_user) -gdocker docker`
+```
