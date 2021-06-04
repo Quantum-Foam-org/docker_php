@@ -87,7 +87,7 @@ git_clone "php" "https://github.com/Quantum-Foam-org/MemcacheStats.git"
 git_clone "web-root" "https://github.com/Quantum-Foam-org/php_mvc_framework.git"
 
 print_info "Creating docker_qf_bridge network"
-DOCKER_NF=`sudo docker network create --subnet=172.27.0.0/28 --gateway=172.27.0.1  docker_qf_bridge`
+DOCKER_NF=`sudo -gdocker docker network create --subnet=172.27.0.0/28 --gateway=172.27.0.1  docker_qf_bridge`
 if [ $? -ne 0 ]
 then
     print_error "Unable to create docker_qf_bridge"

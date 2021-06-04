@@ -6,7 +6,7 @@ services:
                         - ./app:/var/www/html:rw,cached
                         - ./conf.d/etc/php/qf_app_php.dev.ini:/usr/local/etc/php/conf.d/qf_app_php.dev.ini
                 ports:
-                        - "80:80"
+                    - "80:80"
 
          mysql:
                 image: docker_qf_mysql
@@ -19,7 +19,7 @@ services:
                    - ./app:/app:rw,cached
                    - ./conf.d/etc/mysql/my_php.cnf:/etc/mysql/conf.d/my_php.cnf
                 environment:
-                   MYSQL_ROOT_PASSWORD: root 
+                   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
        
          mongodb:
                 image: mongo:4.0.14 
@@ -29,17 +29,17 @@ services:
                           source: docker_qf_mongodb_data
                           target: /data/mongo
                 environment:
-                        MONGO_INITDB_ROOT_USERNAME: root
-                        MONGO_INITDB_ROOT_PASSWORD: example
+                    MONGO_INITDB_ROOT_USERNAME: root
+                    MONGO_INITDB_ROOT_PASSWORD: example
                 ports:
-                        - "27017:27017"
+                    - "27017:27017"
 volumes:
   docker_qf_mongodb_data:
       external: true
   docker_qf_mysql_data:
       external: true
-
+      
 networks:
   default:
     external:
-      name: docker_qf_bridge
+        name: docker_qf_bridge
