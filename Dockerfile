@@ -1,4 +1,4 @@
-FROM php:7.4.1-apache-buster as docker_quantum_foam_php
+FROM php:7.4.1-apache-buster as docker_qf_php
 
 RUN ln -s $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
@@ -23,7 +23,7 @@ COPY conf.d/etc/apache/QF.conf /opt/etc/apache/QF.conf
 RUN ln -s /opt/etc/apache/QF.conf /etc/apache2/sites-enabled
 
 
-FROM mysql:8.0.23 as docker_quantum_foam_mysql
+FROM mysql:8.0.23 as docker_qf_mysql
 
 RUN mkdir -p /opt/service/quantum_foam
 

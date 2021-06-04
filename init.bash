@@ -57,13 +57,14 @@ echo $BASH_LIB_PROMPT
 if [[ ${BASH_LIB_PROMPT^^} == 'Y' ]]
 then
     print_info "Purging old install"
-    DOCKER_IMG=`sudo docker volume rm -f docker_quantum_foam_php`
-    DOCKER_IMG=`sudo docker image rm -f docker_quantum_foam_mysql`
+    DOCKER_IMG=`sudo docker image rm -f docker_qf_php`
+    DOCKER_IMG=`sudo docker image rm -f docker_qf_mysql`
+
     DOCKER_QF_BRIDGE=`sudo docker network rm docker_qf_bridge`
 
-    DOCKER_MONGODB=`sudo docker volume rm mongodb_data`
+    DOCKER_MONGODB=`sudo docker volume rm -f docker_qf_mongodb_data`
 
-    DOCKER_MYSQL=`sudo docker volume rm mysql_data`
+    DOCKER_MYSQL=`sudo docker volume rm -f docker_qf_mysql_data`
     
     PHP_CODE=("php_common" "php_cli" "MemcacheStats" "php_unit_tests" "HTTP_Testing_Utilities")
     for DIR in ${PHP_CODE[@]}
@@ -95,46 +96,46 @@ else
     print_success "Created docker_qf_bridge docker network"
 fi
 
-print_info "Creating mongodb_data volume"
-DOCKER_MONGO=`sudo docker volume create mongodb_data`
+print_info "Creating docker_qf_mongodb_data volume"
+DOCKER_MONGO=`sudo docker volume create docker_qf_mongodb_data`
 if [ $? -ne 0 ]
 then
-    print_error "Unable to create mongodb_data"
+    print_error "Unable to create docker_qf_mongodb_data"
     print_info $DOCKER_MONGO
 else 
-    print_success "Created mongodb_data docker volume"
+    print_success "Created docker_qf_mongodb_data docker volume"
 fi
 
-print_info "Creating mysql_data volume"
-DOCKER_MYSQL=`sudo docker volume create mysql_data`
+print_info "Creating docker_qf_mysql_data volume"
+DOCKER_MYSQL=`sudo docker volume create docker_qf_mysql_data`
 if [ $? -ne 0 ]
 then
-    print_error "Unable to create mysql_data"
+    print_error "Unable to create docker_qf_mysql_data"
     print_info $DOCKER_MYSQL
 else 
-    print_success "Created mysql_data docker volume"
+    print_success "Created docker_qf_mysql_data docker volume"
 fi
 
-print_info "building docker container docker_quantum_foam_php"
-DOCKER_BUILD=`sudo docker build --target docker_quantum_foam_php -t docker_quantum_foam_php .`
+print_info "building docker container docker_qf_php"
+DOCKER_BUILD=`sudo docker build --target docker_qf_php -t docker_qf_php .`
 if [ $? -ne 0 ]
 then
-    print_error "Unable to build docker_quantum_foam"
+    print_error "Unable to build docker_qf_php"
     print_info "$DOCKER_BUILD"
 else
-    print_success "Built docker_quantum_foam"
-    write_file "$DOCKER_BUILD" "docker_quantum_foam.build"
-    print_info "Check docker_quantum_foam.build text file for status"
+    print_success "Built docker_qf_php"
+    write_file "$DOCKER_BUILD" "docker_qf.build"
+    print_info "Check docker_qf.build text file for status"
 fi
 
-print_info "building docker container docker_quantum_foam_mysql"
-DOCKER_BUILD=`sudo docker build --target docker_quantum_foam_mysql -t docker_quantum_foam_mysql .`
+print_info "building docker container docker_qf_mysql"
+DOCKER_BUILD=`sudo docker build --target docker_qf_mysql -t docker_qf_mysql .`
 if [ $? -ne 0 ]
 then
-    print_error "Unable to build docker_quantum_foam"
+    print_error "Unable to build docker_qf_mysql"
     print_info "$DOCKER_BUILD"
 else
-    print_success "Built docker_quantum_foam"
-    write_file "$DOCKER_BUILD" "docker_quantum_foam.build"
-    print_info "Check docker_quantum_foam.build text file for status"
+    print_success "Built docker_qf_mysql"
+    write_file "$DOCKER_BUILD" "docker_qf.build"
+    print_info "Check docker_qf.build text file for status"
 fi
